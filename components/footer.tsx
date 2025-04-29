@@ -10,7 +10,7 @@ export default function Footer() {
     <>
       <div className="h-20 "></div>
 
-      <footer className="fixed bottom-0 left-0  right-0 h-20 bg-gray-100 dark:bg-zinc-900 px-8 md:px-12 border-t flex justify-between items-center gap-2">
+      <footer className="fixed bottom-0 left-0 right-0 h-20 dark:bg-zinc-900 px-8 md:px-12 flex justify-between items-center gap-2">
         <Link
           href={"https://github.com/tiagogp-exe"}
           className={buttonVariants({

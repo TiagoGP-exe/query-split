@@ -7,8 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 
 export const isValidUrl = (url: string) => {
   try {
-    new URL(url);
-    return true;
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
   } catch {
     return false;
   }

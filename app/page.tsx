@@ -25,11 +25,15 @@ export default function Home() {
     reset,
     setError,
     formState: { errors },
-  } = useForm<UrlForm>();
+  } = useForm<UrlForm>({
+    defaultValues: {
+      url: "",
+    },
+  });
   const [history, setHistory] = useState<QueryItem[]>([]);
 
   const onSubmit = ({ url }: UrlForm) => {
-    console.log(url);
+    console.log(isValidUrl(url));
     if (!url || !isValidUrl(url)) {
       setError("url", {
         message: "URL inválida",
@@ -49,9 +53,9 @@ export default function Home() {
     <div className="">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-items-center relative z-10  p-8 pb-20 gap-8 sm:p-10 dark:bg-background min-h-screen top-0 w-full bg-background"
+        className="flex flex-col items-center justify-items-center relative z-10  p-8 pb-20 gap-8 sm:p-10 dark:bg-background min-h-screen top-0 w-full bg-background shadow-xl"
       >
-        <div className="flex max-w-8xl sticky -bottom-20 w-full bg-background items-center gap-2 z-10 ">
+        <div className="flex max-w-8xl sticky top-0 w-full bg-background items-center gap-2 z-10 ">
           <div className="flex flex-col sm:flex-row gap-2 w-full pt-5 items-center relative pb-3">
             <AnimatedLogo />
             <div className="flex gap-2 w-full items-start pt-5 justify-end">

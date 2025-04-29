@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import Logo from "./logo";
 
 const INITIAL_SIZE = {
@@ -8,40 +7,30 @@ const INITIAL_SIZE = {
 };
 
 export const AnimatedLogo = () => {
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const newWidth = Math.max(
-    INITIAL_SIZE.width * (1 - scrollY * 0.001),
-    INITIAL_SIZE.width * 0.5
+  const width = useTransform(
+    scrollY,
+    [0, 2000],
+    [INITIAL_SIZE.width, INITIAL_SIZE.width * 0.5]
   );
-  const newHeight = Math.max(
-    INITIAL_SIZE.height * (1 - scrollY * 0.001),
-    INITIAL_SIZE.height * 0.5
+  const height = useTransform(
+    scrollY,
+    [0, 2000],
+    [INITIAL_SIZE.height, INITIAL_SIZE.height * 0.5]
   );
 
-  const marginTop = newHeight === INITIAL_SIZE.height * 0.5 ? 16 : 0;
+  const marginTop = useTransform(scrollY, [0, 300], [0, 16]);
 
   return (
     <motion.div
-      style={{ overflow: "hidden" }}
-      animate={{
-        marginTop: marginTop,
-        width: newWidth,
-        height: newHeight,
+      style={{
+        overflow: "hidden",
+        width,
+        height,
+        marginTop,
       }}
-      transition={{ type: "spring", stiffness: 100 }}
+      transition={{ type: "spring", stiffness: 100, duration: 10 }}
       className="flex items-center justify-center "
     >
       <Logo />
